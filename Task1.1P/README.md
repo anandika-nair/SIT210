@@ -49,3 +49,6 @@ This modular structure makes the program easier to read, maintain, and debug.
 ## Trigger Method
 
 The original task suggests using a push button or slide switch to activate the lights. However, the available kit did not contain these components. Therefore, the system was triggered using input from the Arduino Serial Monitor. When the user types '1' and presses Enter, both LEDs are activated and the timing sequence begins.
+
+## Link to video
+https://deakin.au.panopto.com/Panopto/Pages/Viewer.aspx?id=a6deea06-a423-40ca-a76b-b406008ff9aa
