@@ -44,3 +44,8 @@ updatePorchLight() controls the porch LED timing.
 updateHallwayLight() controls the hallway LED timing.
 
 This modular structure makes the program easier to read, maintain, and debug.
+
+
+## Trigger Method
+
+The original task suggests using a push button or slide switch to activate the lights. However, the available kit did not contain these components. Therefore, the system was triggered using input from the Arduino Serial Monitor. When the user types '1' and presses Enter, both LEDs are activated and the timing sequence begins.
