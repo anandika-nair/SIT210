@@ -1,95 +1,147 @@
-#include <WiFiNINA.h>   // this library is used to connect Arduino to WiFi
+#include <WiFiNINA.h>
+#include <PubSubClient.h>
 
-// WiFi details (my home network)
+// WiFi details
 char ssid[] = "Optus_256F68";
 char pass[] = "essay34996tw";
 
-// creating a web server on port 80 (standard HTTP port)
-WiFiServer server(80);
+// MQTT broker details
+const char* mqttServer = "broker.hivemq.com";
+const int mqttPort = 1883;
 
-// assigning pins for each room LED
-int livingRoomPin = 2;   // LED for living room
-int bathroomPin = 3;     // LED for bathroom
-int closetPin = 4;       // LED for closet
+// Topic used by both the web page and Arduino
+const char* lightTopic = "sit210/anandika/lights/control";
 
-// this function takes room name as input and toggles that LED
-void toggleRoom(String roomName) {
+// LED pins
+int livingLED = 2;
+int bathroomLED = 3;
+int closetLED = 4;
 
-  roomName.toLowerCase();  // converting to lowercase to avoid mismatch
+// Variables to remember whether each light is ON or OFF
+bool livingState = false;
+bool bathroomState = false;
+bool closetState = false;
 
-  // checking which room is requested and toggling that LED
-  if (roomName == "living room") {
-    digitalWrite(livingRoomPin, !digitalRead(livingRoomPin));  
-    // this flips the current state (ON becomes OFF, OFF becomes ON)
+// Create WiFi and MQTT client objects
+WiFiClient wifiClient;
+PubSubClient client(wifiClient);
+
+void setup() 
+{
+  Serial.begin(9600);
+
+  // Set LED pins as outputs
+  pinMode(livingLED, OUTPUT);
+  pinMode(bathroomLED, OUTPUT);
+  pinMode(closetLED, OUTPUT);
+
+  // Start with all lights OFF
+  digitalWrite(livingLED, LOW);
+  digitalWrite(bathroomLED, LOW);
+  digitalWrite(closetLED, LOW);
+
+  connectToWiFi();
+
+  // Set MQTT broker and message receiving function
+  client.setServer(mqttServer, mqttPort);
+  client.setCallback(callback);
+
+  connectToMQTT();
+}
+
+void loop() 
+{
+  // Reconnect if MQTT disconnects
+  if (!client.connected()) 
+  {
+    connectToMQTT();
   }
-  else if (roomName == "bathroom") {
-    digitalWrite(bathroomPin, !digitalRead(bathroomPin));
+
+  // Keep checking for MQTT messages
+  client.loop();
+}
+
+void connectToWiFi() 
+{
+  Serial.print("Connecting to WiFi");
+
+  while (WiFi.begin(ssid, pass) != WL_CONNECTED) 
+  {
+    Serial.print(".");
+    delay(2000);
   }
-  else if (roomName == "closet") {
-    digitalWrite(closetPin, !digitalRead(closetPin));
+
+  Serial.println();
+  Serial.println("WiFi connected");
+}
+
+void connectToMQTT() 
+{
+  while (!client.connected()) 
+  {
+    Serial.print("Connecting to MQTT... ");
+
+    // Random client ID helps avoid duplicate MQTT client names
+    String clientId = "Nano33IoTClient_";
+    clientId += String(random(1000, 9999));
+
+    if (client.connect(clientId.c_str())) 
+    {
+      Serial.println("connected");
+
+      // Arduino listens to this topic for light commands
+      client.subscribe(lightTopic);
+      Serial.print("Subscribed to topic: ");
+      Serial.println(lightTopic);
+    } 
+    else 
+    {
+      Serial.print("failed, rc=");
+      Serial.println(client.state());
+      delay(2000);
+    }
   }
 }
 
-void setup() {
+void callback(char* topic, byte* payload, unsigned int length) 
+{
+  String roomName = "";
 
-  Serial.begin(9600);   // starting serial monitor for debugging
-
-  // setting all LED pins as output
-  pinMode(livingRoomPin, OUTPUT);
-  pinMode(bathroomPin, OUTPUT);
-  pinMode(closetPin, OUTPUT);
-
-  // connecting to WiFi
-  WiFi.begin(ssid, pass);
-
-  // keep trying until WiFi connects
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to WiFi...");
+  // Convert MQTT message into a normal string
+  for (int i = 0; i < length; i++) 
+  {
+    roomName += (char)payload[i];
   }
 
-  // once connected, print confirmation and IP address
-  Serial.println("Connected!");
-  Serial.println(WiFi.localIP());  
-  // this IP is used in browser to open the web page
+  Serial.print("Message received: ");
+  Serial.println(roomName);
 
-  server.begin();  // starting the web server
+  // Send the room name to the function that controls LEDs
+  toggleRoom(roomName);
 }
 
-void loop() {
-
-  // checking if any client (browser) is trying to connect
-  WiFiClient client = server.available();
-
-  if (client) {
-
-    // reading the request sent by browser
-    String request = client.readStringUntil('\r');
-    Serial.println(request);   // printing request for understanding
-
-    // checking which button was pressed based on URL
-    if (request.indexOf("/living") != -1) {
-      toggleRoom("living room");   // calling function with string
-    }
-    else if (request.indexOf("/bathroom") != -1) {
-      toggleRoom("bathroom");
-    }
-    else if (request.indexOf("/closet") != -1) {
-      toggleRoom("closet");
-    }
-
-    // sending response back to browser (this is the HTML page)
-    client.println("HTTP/1.1 200 OK");
-    client.println("Content-Type: text/html");
-    client.println("");
-
-    // this part creates the simple web interface with buttons
-    client.println("<h2>LED Control</h2>");
-    client.println("<button onclick=\"location.href='/living'\">Living Room</button><br><br>");
-    client.println("<button onclick=\"location.href='/bathroom'\">Bathroom</button><br><br>");
-    client.println("<button onclick=\"location.href='/closet'\">Closet</button>");
-
-    delay(1);        // small delay for stability
-    client.stop();   // closing connection after response
+void toggleRoom(String roomName) 
+{
+  if (roomName == "living room") 
+  {
+    livingState = !livingState;
+    digitalWrite(livingLED, livingState);
+    Serial.println("Living room light toggled");
+  } 
+  else if (roomName == "bathroom") 
+  {
+    bathroomState = !bathroomState;
+    digitalWrite(bathroomLED, bathroomState);
+    Serial.println("Bathroom light toggled");
+  } 
+  else if (roomName == "closet") 
+  {
+    closetState = !closetState;
+    digitalWrite(closetLED, closetState);
+    Serial.println("Closet light toggled");
+  } 
+  else 
+  {
+    Serial.println("Unknown room name");
   }
 }
