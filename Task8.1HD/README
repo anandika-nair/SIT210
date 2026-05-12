@@ -1,0 +1,62 @@
+# Task 8.1HD – Audio Processing
+
+## Overview
+This project demonstrates a voice-activated smart lighting system using Raspberry Pi and Arduino Nano 33 IoT with Bluetooth communication. The system is designed to control the bathroom light, hallway light, and exhaust fan based on voice commands and room light intensity.
+
+In this implementation, the Raspberry Pi processes the user command and sends it to the Arduino Nano 33 IoT using Bluetooth. The Arduino reads the light intensity using a BH1750 (GY-30) light sensor and decides whether the lights should be turned ON or OFF depending on the room brightness.
+
+Due to the unavailability of an external microphone connected to the Raspberry Pi, typed command simulation was used to represent the recognised speech command while maintaining the same Bluetooth communication and system logic.
+
+---
+
+## Hardware Used
+- Raspberry Pi
+- Arduino Nano 33 IoT
+- BH1750 (GY-30) Light Sensor
+- 3 LEDs
+- Breadboard
+- Jumper Wires
+- Resistors
+
+---
+
+## Software Used
+- Arduino IDE
+- Python
+- ArduinoBLE Library
+- BH1750 Library
+- Bleak Python Library
+
+---
+
+## System Function
+The system works as follows:
+
+1. The user gives a command.
+2. The Raspberry Pi processes the command.
+3. The command is sent to Arduino Nano 33 IoT using Bluetooth.
+4. Arduino checks the room light intensity using the BH1750 sensor.
+5. If the room is dark, the corresponding LED or fan output is activated.
+6. If the room is already bright, the lights remain OFF.
+
+---
+
+## Commands Used
+- `bathroom on`
+- `hallway on`
+- `fan on`
+- `all off`
+
+---
+
+## Files Included
+- Arduino Bluetooth and sensor code
+- Raspberry Pi Python Bluetooth code
+- Hardware setup images
+- Flowchart
+- Serial monitor output screenshots
+
+---
+
+## Outcome
+The system successfully demonstrated Bluetooth communication between Raspberry Pi and Arduino Nano 33 IoT along with light-level-based smart lighting control. The LEDs turned ON only during dark conditions, and all outputs could be controlled through Raspberry Pi commands.
