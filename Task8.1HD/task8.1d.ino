@@ -1,124 +1,79 @@
+#include <ArduinoBLE.h>
 #include <Wire.h>
 #include <BH1750.h>
-#include <ArduinoBLE.h>
 
 BH1750 lightMeter;
 
-// LED pins
 const int bathroomLED = 2;
 const int hallwayLED = 3;
 const int fanLED = 4;
 
-// Bluetooth service
-BLEService lightService("180A");
+BLEService voiceService("19B10000-E8F2-537E-4F6C-D104768A1214");
 
-// Bluetooth characteristic
-BLEStringCharacteristic commandCharacteristic(
-  "2A57",
-  BLERead | BLEWrite,
-  50
+BLEStringCharacteristic commandChar(
+  "19B10001-E8F2-537E-4F6C-D104768A1214",
+  BLEWrite,
+  30
 );
 
 void setup() {
   Serial.begin(9600);
-  Wire.begin();
 
-  // LED setup
   pinMode(bathroomLED, OUTPUT);
   pinMode(hallwayLED, OUTPUT);
   pinMode(fanLED, OUTPUT);
 
-  digitalWrite(bathroomLED, LOW);
-  digitalWrite(hallwayLED, LOW);
-  digitalWrite(fanLED, LOW);
+  Wire.begin();
+  lightMeter.begin();
 
-  // Start light sensor
-  if (lightMeter.begin()) {
-    Serial.println("BH1750 started");
-  } else {
-    Serial.println("BH1750 error");
-  }
-
-  // Start Bluetooth
   if (!BLE.begin()) {
-    Serial.println("Bluetooth failed");
+    Serial.println("BLE failed");
     while (1);
   }
 
-  BLE.setLocalName("SmartLights");
-  BLE.setAdvertisedService(lightService);
-
-  lightService.addCharacteristic(commandCharacteristic);
-  BLE.addService(lightService);
-
-  commandCharacteristic.writeValue("");
-
+  BLE.setLocalName("VoiceLightSystem");
+  BLE.setAdvertisedService(voiceService);
+  voiceService.addCharacteristic(commandChar);
+  BLE.addService(voiceService);
   BLE.advertise();
 
-  Serial.println("Bluetooth device active");
+  Serial.println("Waiting for Raspberry Pi...");
 }
 
 void loop() {
   BLEDevice central = BLE.central();
 
   if (central) {
-    Serial.println("Connected to central");
+    Serial.println("Connected");
 
     while (central.connected()) {
+      if (commandChar.written()) {
+        String command = commandChar.value();
+        command.toLowerCase();
 
-      float lux = lightMeter.readLightLevel();
+        float lux = lightMeter.readLightLevel();
 
-      if (commandCharacteristic.written()) {
-
-        String command = commandCharacteristic.value();
-
-        Serial.print("Command received: ");
+        Serial.print("Received: ");
         Serial.println(command);
 
-        Serial.print("Light Level: ");
-        Serial.println(lux);
-
-        // Bathroom command
-        if (command == "bathroom on") {
-
-          if (lux < 50) {
-            digitalWrite(bathroomLED, HIGH);
-            Serial.println("Bathroom light ON");
-          } else {
-            Serial.println("Room already bright");
-          }
+        if (command == "bathroom" && lux < 300) {
+          digitalWrite(bathroomLED, HIGH);
         }
 
-        // Hallway command
-        else if (command == "hallway on") {
-
-          if (lux < 50) {
-            digitalWrite(hallwayLED, HIGH);
-            Serial.println("Hallway light ON");
-          } else {
-            Serial.println("Room already bright");
-          }
+        else if (command == "hallway" && lux < 300) {
+          digitalWrite(hallwayLED, HIGH);
         }
 
-        // Fan command
-        else if (command == "fan on") {
-
+        else if (command == "fan") {
           digitalWrite(fanLED, HIGH);
-          Serial.println("Fan ON");
         }
 
-        // Turn everything OFF
         else if (command == "all off") {
-
           digitalWrite(bathroomLED, LOW);
           digitalWrite(hallwayLED, LOW);
           digitalWrite(fanLED, LOW);
-
-          Serial.println("All outputs OFF");
         }
       }
     }
-
-    Serial.println("Disconnected");
   }
 }
