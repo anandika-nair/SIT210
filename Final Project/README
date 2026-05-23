@@ -1,0 +1,44 @@
+# SIT210 Embedded Systems Development.
+# Smart Wearable Fall Detection and Caregiver Monitoring System
+
+## Overview
+
+It is a Smart Wearable Fall Detection and Caregiver Monitoring System designed to help detect possible falls and notify caregivers in real time.
+
+The patient-side wearable device uses an Arduino Nano 33 IoT with its built-in IMU sensor to detect fall-like movement. When a fall is confirmed, the system activates a local buzzer alarm and sends an MQTT emergency alert.
+
+On the caregiver side, a Raspberry Pi with Node-RED receives the alert and updates a real-time monitoring dashboard. A patient assistance dashboard is also included for manual help requests and optional Telegram notifications.
+
+---
+
+## Hardware Used
+
+- Arduino Nano 33 IoT
+- Raspberry Pi
+- Buzzer
+- Slider switch
+- Breadboard
+- Jumper wires
+- Portable power bank
+
+---
+
+## Software Used
+
+- Arduino IDE
+- Node-RED
+- MQTT Broker (broker.emqx.io)
+- Arduino Libraries:
+  - Arduino_LSM6DS3
+  - WiFiNINA
+  - PubSubClient
+- Telegram (optional integration)
+
+---
+
+## Files in this Repository
+
+- `wearable_fall_detection.ino` – Arduino code for wearable fall detection system
+- `caregiver_dashboard.json` – Node-RED caregiver monitoring dashboard flow
+- `patient_dashboard.json` – Node-RED patient assistance dashboard flow
+- `README.md` – Project documentation
