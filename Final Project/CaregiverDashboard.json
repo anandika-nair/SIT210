@@ -1,0 +1,563 @@
+[
+    {
+        "id": "047db0f2b2fdc96d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d06cb704cd80d5e0",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "fddeca49e5997808",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "89d95410acfdd92c",
+        "type": "ui_tab",
+        "name": "Add new ui_tab",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "17a78c4269c7a0ad",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "Times New Roman,Times,serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#6da7ab",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": true
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "Times New Roman,Times,serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "41e2c7c54f938ab9",
+        "type": "ui_tab",
+        "name": "Caregiver Dashboard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "82b36da7bb1649f5",
+        "type": "ui_group",
+        "name": "Patient Monitoring",
+        "tab": "41e2c7c54f938ab9",
+        "order": 1,
+        "disp": true,
+        "width": "9",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7068ab89f61605f1",
+        "type": "telegram bot",
+        "botname": "Fall Alert Bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "c927220c6777be61",
+        "type": "telegram bot",
+        "botname": "Fall Detection Alret Bot",
+        "usernames": "",
+        "chatids": "6558898422",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "c3edfdcffd8b4424",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "",
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3a6b8983af549411",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "",
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6c2d99604f95f28f",
+        "type": "ui_group",
+        "name": "Add New Patient",
+        "tab": "41e2c7c54f938ab9",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ffe905e40a4e6488",
+        "type": "mqtt in",
+        "z": "047db0f2b2fdc96d",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "fddeca49e5997808",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 280,
+        "wires": [
+            [
+                "b38e7f10a5614375",
+                "fa56dfabf2fb8ca4",
+                "e952c5f38d9a5cb4"
+            ]
+        ]
+    },
+    {
+        "id": "b38e7f10a5614375",
+        "type": "debug",
+        "z": "047db0f2b2fdc96d",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "5852e56fe97a5448",
+        "type": "ui_text",
+        "z": "047db0f2b2fdc96d",
+        "group": "82b36da7bb1649f5",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "(Mary)Patient 1 Status",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1000,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "fa56dfabf2fb8ca4",
+        "type": "function",
+        "z": "047db0f2b2fdc96d",
+        "name": "Format Patient Status",
+        "func": "if (msg.payload === \"FALL_DETECTED\") {\n    msg.payload = \"ALERT: FALL DETECTED - Patient 1 needs immediate help\";\n} else if (msg.payload === \"SAFE\") {\n    msg.payload = \"SAFE - Patient 1 is okay\";\n} else {\n    msg.payload = \"Waiting for patient data\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 300,
+        "wires": [
+            [
+                "5852e56fe97a5448"
+            ]
+        ]
+    },
+    {
+        "id": "5385615287757e7e",
+        "type": "ui_text",
+        "z": "047db0f2b2fdc96d",
+        "group": "82b36da7bb1649f5",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "(Joseph) Patient 2 Status",
+        "format": "SAFE- Patient 2 Okay ",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1010,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "b92d7a7f419b87aa",
+        "type": "ui_text",
+        "z": "047db0f2b2fdc96d",
+        "group": "82b36da7bb1649f5",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "(Lekshmi) Patient 3 Status",
+        "format": "SAFE- Patient 3 Okay ",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1020,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "e952c5f38d9a5cb4",
+        "type": "switch",
+        "z": "047db0f2b2fdc96d",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "FALL_DETECTED",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 690,
+        "y": 420,
+        "wires": [
+            [
+                "545044503352d941"
+            ]
+        ]
+    },
+    {
+        "id": "7d764c8b0f4ef508",
+        "type": "ui_toast",
+        "z": "047db0f2b2fdc96d",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1190,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "545044503352d941",
+        "type": "change",
+        "z": "047db0f2b2fdc96d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "FALL ALERT:  Pateint 1 needs immediate help",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 940,
+        "y": 420,
+        "wires": [
+            [
+                "7d764c8b0f4ef508"
+            ]
+        ]
+    },
+    {
+        "id": "be44fdbf0d7dc634",
+        "type": "ui_form",
+        "z": "047db0f2b2fdc96d",
+        "name": "",
+        "label": "Add New Patient",
+        "group": "6c2d99604f95f28f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Patient Name",
+                "value": "patientName",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "patientName": ""
+        },
+        "payload": "",
+        "submit": "Add",
+        "cancel": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 210,
+        "y": 540,
+        "wires": [
+            [
+                "c8b402089e64a6b3"
+            ]
+        ]
+    },
+    {
+        "id": "c8b402089e64a6b3",
+        "type": "function",
+        "z": "047db0f2b2fdc96d",
+        "name": "Add Patient",
+        "func": "let patientName = msg.payload.patientName;\n\nif (!patientName || patientName.trim() === \"\") {\n    msg.payload = \"Please enter the patient name.\";\n    return msg;\n}\n\nlet patients = flow.get(\"patients\") || [];\n\npatients.push({\n    name: patientName,\n    status: \"SAFE - Standby Patient\"\n});\n\nflow.set(\"patients\", patients);\n\nmsg.payload = \"Added: \" + patientName + \" - SAFE - Standby Patient\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 540,
+        "wires": [
+            [
+                "7e6a8d3222f75dae"
+            ]
+        ]
+    },
+    {
+        "id": "7e6a8d3222f75dae",
+        "type": "ui_text",
+        "z": "047db0f2b2fdc96d",
+        "group": "6c2d99604f95f28f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Added",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 650,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "98cdc84b6ae32c43",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-contrib-telegrambot": "17.4.5"
+        }
+    }
+]

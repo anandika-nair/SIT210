@@ -1,0 +1,209 @@
+[
+    {
+        "id": "f8db7b680f965897",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "74276e2959a69638",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "827d70b83a23313a",
+        "type": "mqtt in",
+        "z": "f8db7b680f965897",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "74276e2959a69638",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 830,
+        "y": 720,
+        "wires": [
+            [
+                "257b22bc9eab7530"
+            ]
+        ]
+    },
+    {
+        "id": "f77007a495daddc8",
+        "type": "http in",
+        "z": "f8db7b680f965897",
+        "name": "",
+        "url": "/fall",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "a1a1e4c73c482929"
+            ]
+        ]
+    },
+    {
+        "id": "a1a1e4c73c482929",
+        "type": "template",
+        "z": "f8db7b680f965897",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n    <title>My Dashboard</title>\n    <style>\n        body {\n            font-family: Arial;\n            text-align: center;\n            background-color: #f5f5f5;\n            padding-top: 50px;\n        }\n\n        button {\n            width: 300px;\n            padding: 22px;\n            margin: 15px;\n            font-size: 22px;\n            border: none;\n            border-radius: 12px;\n            cursor: pointer;\n            display: block;\n            margin-left: auto;\n            margin-right: auto;\n        }\n\n        .unwell { background-color: orange; color: black; }\n        .help { background-color: gold; color: black; }\n    </style>\n</head>\n\n<body>\n    <h1>My Dashboard</h1>\n\n    <button class=\"unwell\" onclick=\"sendAction('feeling_unwell')\">Feeling Unwell</button>\n    <button class=\"help\" onclick=\"sendAction('need_help')\">Need Help</button>\n\n\n    <p id=\"status\"></p>\n\n    <script>\n        function sendAction(action) {\n            document.getElementById(\"status\").innerHTML = \"Button clicked: \" + action;\n\n            fetch(\"/action/\" + action, {\n                method: \"POST\"\n            })\n            .then(response => response.text())\n            .then(data => {\n                document.getElementById(\"status\").innerHTML = \"Sent: \" + action;\n            })\n            .catch(error => {\n                document.getElementById(\"status\").innerHTML = \"Error sending action\";\n            });\n        }\n    </script>\n</body>\n</html>",
+        "output": "str",
+        "x": 740,
+        "y": 520,
+        "wires": [
+            [
+                "8eddd2d287c6bf0a"
+            ]
+        ]
+    },
+    {
+        "id": "8eddd2d287c6bf0a",
+        "type": "http response",
+        "z": "f8db7b680f965897",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 770,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "10f53105b642fe7e",
+        "type": "http in",
+        "z": "f8db7b680f965897",
+        "name": "",
+        "url": "/action/:type",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 990,
+        "y": 580,
+        "wires": [
+            [
+                "211d76ed8bd29f72"
+            ]
+        ]
+    },
+    {
+        "id": "211d76ed8bd29f72",
+        "type": "function",
+        "z": "f8db7b680f965897",
+        "name": "function 3",
+        "func": "let action = msg.req.params.type;\n\n\nif (action === \"feeling_unwell\") {\n    msg.payload = {\n        chatId: \"TELEGRAM CHAT ID\",\n        type: \"message\",\n        content: \"User selected: Feeling Unwell.\"\n    };\n    return msg;\n}\n\nif (action === \"need_help\") {\n    msg.payload = {\n        chatId: \"TELEGRAM CHAT ID\",\n        type: \"message\",\n        content: \"User selected: Need Help.\"\n    };\n    return msg;\n}\n\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1280,
+        "y": 580,
+        "wires": [
+            [
+                "3fcc14593ddb0332",
+                "52abf2d7038b52b8"
+            ]
+        ]
+    },
+    {
+        "id": "3fcc14593ddb0332",
+        "type": "mqtt out",
+        "z": "f8db7b680f965897",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "74276e2959a69638",
+        "x": 1630,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "257b22bc9eab7530",
+        "type": "function",
+        "z": "f8db7b680f965897",
+        "name": "function 4",
+        "func": "msg.payload = {\n    chatId: \"YOUR CHAT ID\",\n    type: \"message\",\n    content: \"Automatic Emergency Alert: Fall detected by the system. No response was received, please check immediately.\"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 720,
+        "wires": [
+            [
+                "52abf2d7038b52b8"
+            ]
+        ]
+    },
+    {
+        "id": "52abf2d7038b52b8",
+        "type": "telegram sender",
+        "z": "f8db7b680f965897",
+        "name": "",
+        "bot": "",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 2030,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6d6d5fbbea4fe260",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-telegrambot": "17.1.2"
+        }
+    }
+]
